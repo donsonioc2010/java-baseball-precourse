@@ -15,16 +15,16 @@ public class NumberAdmin {
     public NumberAdmin() {
         computerVO  = new ComputerNumberVO();
         playerVO    = new PlayerNumberVO();
-        this.setComputerNumbers();
+        setComputerNumbers();
     }
 
     /* 플레이어의 정답 셋팅 */
     public void playerSetting() {
         playerVO.initValue();
-        this.getNumberByPlayer();
-        if(this.validationPlayerStr()) {
+        getNumberByPlayer();
+        if(validationPlayerStr()) {
             playerVO.setAry();
-            this.setPlayerNumbersInputAry();
+            setPlayerNumbersInputAry();
         }
     }
 

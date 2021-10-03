@@ -22,8 +22,7 @@ public class GameAdmin {
 
     /* 게임진행 */
     public void doRunGame() {
-        if(number.getPlayerVO().getPlayerNumbers() == null &&
-                (number.getPlayerVO().getPlayerNumbers().length != number.getComputerVO().getComputerNumbers().length)) {
+        if(number.getPlayerVO().getPlayerNumbers() == null) {
             System.out.println(Constants.PRT_ERROR);
             return;
         }
@@ -40,22 +39,24 @@ public class GameAdmin {
 
     /* 게임의 결과를 Console출력 */
     public void showGameResult() {
-        System.out.println();
         if(showStrike()) {
             return;
         }
         if(resultVO.getBallCnt() > 0) {
-            System.out.println( " " + resultVO.getBallCnt() + Constants.PRT_BALL );
+            System.out.println(resultVO.getBallCnt() + Constants.PRT_BALL );
         }
         if(resultVO.getBallCnt() == 0 && resultVO.getStrikeCnt() == 0) {
-            System.out.print(Constants.PRT_NOTHING);
+            System.out.println(Constants.PRT_NOTHING);
         }
     }
 
     /* strike의 경우 3개면 게임을 종료해야하기에 따로 구분, 3스트라이크면 다음문장 필요없기에 분기추가. */
     public boolean showStrike() {
-        if(resultVO.getStrikeCnt() > 0) {
-            System.out.print( resultVO.getStrikeCnt() + Constants.PRT_STRIKE );
+        if(resultVO.getStrikeCnt() > 0 && resultVO.getBallCnt() > 0) {
+            System.out.print( resultVO.getStrikeCnt() + Constants.PRT_STRIKE + " " );
+        }
+        if(resultVO.getStrikeCnt() > 0 && resultVO.getBallCnt() == 0) {
+            System.out.println( resultVO.getStrikeCnt() + Constants.PRT_STRIKE + " " );
         }
         if(resultVO.getStrikeCnt() >= 3) {
             System.out.println();
