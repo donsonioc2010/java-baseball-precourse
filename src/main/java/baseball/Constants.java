@@ -10,6 +10,11 @@ public class Constants {
     public static final String PRT_NOTHING      = "낫싱";
     public static final String PRT_ERROR        = "[ERROR]";
 
-    public static final String REGAME_VAL       = "1";      //재시작 Value
-    public static final String ENDGAME_VAL      = "2";      //게임종료 Value
+    public static final String REGAME_VAL       = "1";      //  재시작 Value
+    public static final String ENDGAME_VAL      = "2";      //  게임종료 Value
+
+    public static final int GAME_ARY_LENGTH     = 3;        // 배열의 크기
+    public static final int NUMBER_AREA         = 10;       // 뽑는 카드의 크기
+    public static final int START_CARD_NUMBER   = 1;        // 뽑는 카드 시작번호
+    public static final int END_CARD_NUMBER     = 9;        // 뽑는 카드 종료번호
 }
