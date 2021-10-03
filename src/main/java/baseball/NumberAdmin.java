@@ -59,7 +59,7 @@ public class NumberAdmin {
 
     /* 받은 char가 1~9 사이인 경우 true, 아니면 false */
     public boolean validationPlayerNumberChar(char num){
-        return num >= 1 && num <= 9;
+        return num >= '1' && num <= '9';
     }
 
     /* 컴퓨터의 숫자를 배열로 설정함. 중복이 아닌경우에만 idx가 증가하면서 배열세팅*/
