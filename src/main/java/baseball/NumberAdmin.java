@@ -1,37 +1,29 @@
 package baseball;
 
+import baseball.VO.ComputerNumberVO;
+import baseball.VO.PlayerNumberVO;
 import nextstep.utils.Console;
 import nextstep.utils.Randoms;
 
 import java.util.Arrays;
 
 public class NumberAdmin {
-    public static String[] computerNumbers            = null;
-    public static String[] playerNumbers              = null;
-    public static String playerNumberStr              = null;
-    private Boolean[] recordNumbers             = null;
+    public ComputerNumberVO computerVO;
+    public PlayerNumberVO   playerVO;
 
     /* Computer와 Player의 정보를 초기화해주는 기능. */
     public NumberAdmin() {
-        this.initComputerNumbersAry();
+        computerVO  = new ComputerNumberVO();
+        playerVO    = new PlayerNumberVO();
         this.setComputerNumbers();
-    }
-
-    /* 게임이 시작할 시에 혹시나 모를 플레이어와 컴퓨터의 배열을 초기화에 사용 */
-    private void initComputerNumbersAry() {
-        computerNumbers             = new String[Constants.GAME_ARY_LENGTH];    // 컴퓨터 넘버를 기억하는 배열
-        playerNumbers               = new String[Constants.GAME_ARY_LENGTH];    // 플레이어의 넘버를 기억하는 배열
-        recordNumbers             = new Boolean[Constants.NUMBER_AREA];         // 1 ~ 9 로 사용을 위해 10을선언, 0은 사용안함
-        Arrays.fill(computerNumbers, null);
-        Arrays.fill(playerNumbers, null);
-        Arrays.fill(recordNumbers, false);
-        playerNumberStr = null;
     }
 
     /* 플레이어의 정답 셋팅 */
     public void playerSetting() {
+        playerVO.initValue();
         this.getNumberByPlayer();
         if(this.validationPlayerStr()) {
+            playerVO.setAry();
             this.setPlayerNumbersInputAry();
         }
     }
@@ -39,14 +31,14 @@ public class NumberAdmin {
     /* 플레이어의 숫자를 받는 메소드*/
     public void getNumberByPlayer() {
         System.out.print(Constants.GET_NUM_STR);
-        playerNumberStr = Console.readLine().trim();
+        playerVO.setPlayerNumberStr(Console.readLine().trim());
     }
 
     /* 플레이어의 값이 정상적으로 입력한 경우에만 실행이 됨. validation이 필요가없슴. */
     public void setPlayerNumbersInputAry() {
         for(int i = 0; i < Constants.GAME_ARY_LENGTH; i++) {
-            char confirmStr = playerNumberStr.charAt(i);
-            playerNumbers[i] = String.valueOf(confirmStr);
+            char confirmStr = playerVO.getPlayerNumberStr().charAt(i);
+            playerVO.setPlayerNumbers(i, String.valueOf(confirmStr));
         }
     }
 
@@ -56,9 +48,9 @@ public class NumberAdmin {
     * */
     public boolean validationPlayerStr() {
         int idx = 0;
-        boolean resultValue = playerNumberStr.length() == Constants.GAME_ARY_LENGTH;
+        boolean resultValue = playerVO.getPlayerNumberStr().length() == Constants.GAME_ARY_LENGTH;
         while(idx < Constants.GAME_ARY_LENGTH && resultValue) {
-            char num = playerNumberStr.charAt(idx);
+            char num = playerVO.getPlayerNumberStr().charAt(idx);
             resultValue = validationPlayerNumberChar(num);
             idx++;
         }
@@ -89,7 +81,7 @@ public class NumberAdmin {
     * */
     private int setComputerNumbersInputAry(int idx, int rndNum) {
         if(validationComputerRndNum(rndNum)) {
-            computerNumbers[idx] = String.valueOf(rndNum);
+            computerVO.setComputerNumbers(idx, String.valueOf(rndNum));
             return idx + 1;
         }
         return idx;
@@ -103,10 +95,18 @@ public class NumberAdmin {
         recordNumbers배열의 해당 값을 true 로 바꾼 이후 return 값을 true로 넘겨주게됨.
     */
     private boolean validationComputerRndNum(int rndNum) {
-        if(recordNumbers[rndNum]) {
+        if(computerVO.getRecordNumbers(rndNum)) {
             return false;           //이미 값이 있는경우
         }
-        recordNumbers[rndNum] = true;
+        computerVO.setRecordNumbers(rndNum, true);
         return true;                //값이 없는 경우
+    }
+
+    public ComputerNumberVO getComputerVO() {
+        return computerVO;
+    }
+
+    public PlayerNumberVO getPlayerVO() {
+        return playerVO;
     }
 }
